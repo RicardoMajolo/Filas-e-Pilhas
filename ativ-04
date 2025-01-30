@@ -1,0 +1,5 @@
+4)  Tratando-se de pilhas, explique por que é mais conveniente a definição do topo no início e não no final
+da estrutura.
+
+Definir o topo da pilha no início facilita porque as operações de empilhar e desempilhar ficam mais rápidas e simples.
+E também faz mais sentido com a forma como a memória funciona em muitas linguagens, como a linguagem C que estamos estudando, onde os índices começam do 0, isso torna o código mais eficiente.
