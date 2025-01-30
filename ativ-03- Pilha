@@ -1,0 +1,108 @@
+/*
+3)  Reescreva os programas anteriores alterando as seguintes características para cada um deles:
+1. Defina um tamanho máximo para a pilha/fila, de forma a não permitir novas inserções caso a
+pilha/fila esteja cheia.
+2. Reescreva as sub-rotinas de forma que o topo da pilha fique no início e a base no final da
+estrutura.
+3. Reescreva as sub-rotinas de forma que o início da fila fique no fim da estrutura.
+*PILHA*
+*/
+//PILHA
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 10
+
+typedef struct {
+    int dados[MAX];
+    int topo;
+} Pilha;
+void inicializar(Pilha *p) {
+    p->topo = MAX; // O topo começa no final do vetor
+}
+int pilha_cheia(Pilha *p) {
+    return p->topo == 0; // Verifica se o topo chegou ao início
+}
+int pilha_vazia(Pilha *p) {
+    return p->topo == MAX; // Verifica se a pilha está vazia
+}
+void empilhar(Pilha *p, int valor) {
+    if (pilha_cheia(p)) {
+        printf("Erro: Pilha cheia!\n");
+    } else {
+        p->topo--; // Desloca o topo para a posição anterior
+        p->dados[p->topo] = valor;
+        printf("Elemento %d empilhado.\n", valor);
+    }
+}
+int desempilhar(Pilha *p) {
+    if (pilha_vazia(p)) {
+        printf("Erro: Pilha vazia!\n");
+        return -1;
+    } else {
+        int valor = p->dados[p->topo];
+        p->topo++; // Move o topo para a posição posterior
+        return valor;
+    }
+}
+int topo(Pilha *p) {
+    if (pilha_vazia(p)) {
+        printf("Erro: Pilha vazia!\n");
+        return -1;
+    } else {
+        return p->dados[p->topo];
+    }
+}
+int quantidade(Pilha *p) {
+    return MAX - p->topo; // A quantidade é a diferença entre o topo e o final
+}
+void esvaziar(Pilha *p) {
+    p->topo = MAX;
+    printf("Pilha esvaziada.\n");
+}
+int main() {
+    Pilha p;
+    inicializar(&p);
+    int escolha, valor;
+    do {
+        printf("\nEscolha uma operacao:\n");
+        printf("1. Empilhar\n");
+        printf("2. Desempilhar\n");
+        printf("3. Exibir topo\n");
+        printf("4. Exibir quantidade de elementos\n");
+        printf("5. Esvaziar pilha\n");
+        printf("6. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &escolha);
+        switch (escolha) {
+            case 1:
+                printf("Digite um valor para empilhar: ");
+                scanf("%d", &valor);
+                empilhar(&p, valor);
+                break;
+            case 2:
+                valor = desempilhar(&p);
+                if (valor != -1) {
+                    printf("Elemento desempilhado: %d\n", valor);
+                }
+                break;
+            case 3:
+                valor = topo(&p);
+                if (valor != -1) {
+                    printf("Elemento do topo: %d\n", valor);
+                }
+                break;
+            case 4:
+                printf("Quantidade de elementos na pilha: %d\n", quantidade(&p));
+                break;
+            case 5:
+                esvaziar(&p);
+                break;
+            case 6:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opcao invalida!\n");
+        }
+    } while (escolha != 6);
+    return 0;
+}
