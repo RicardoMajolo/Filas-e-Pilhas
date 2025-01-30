@@ -1,0 +1,6 @@
+5)  Tratando-se de filas, explique por que é mais conveniente a realização de inserção no fim e remoção do
+início.
+
+Inserir no fim e remover no início é mais tranquilo porque segue o jeito natural de uma fila, onde quem chega primeiro sai primeiro,
+isso faz as operações mais rápidas e sem complicação, sem precisar mexer nos outros itens.
+É como se fosse uma fila de espera em um banco, o primeiro que chegou é o primeiro que será atendido e liberado para ir embora.
