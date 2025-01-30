@@ -1,0 +1,114 @@
+/*
+3)  Reescreva os programas anteriores alterando as seguintes características para cada um deles:
+1. Defina um tamanho máximo para a pilha/fila, de forma a não permitir novas inserções caso a
+pilha/fila esteja cheia.
+2. Reescreva as sub-rotinas de forma que o topo da pilha fique no início e a base no final da
+estrutura.
+3. Reescreva as sub-rotinas de forma que o início da fila fique no fim da estrutura.
+FILA
+*/
+//FILA
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 10
+
+typedef struct {
+    int dados[MAX];
+    int inicio;
+    int fim;
+} Fila;
+
+void inicializar(Fila *f) {
+    f->inicio = MAX - 1; // O início da fila começa no final do vetor
+    f->fim = MAX - 1;
+}
+int fila_cheia(Fila *f) {
+    return (f->inicio == 0); // Verifica se o início chegou ao início do vetor
+}
+
+int fila_vazia(Fila *f) {
+    return (f->inicio == f->fim); // Verifica se a fila está vazia
+}
+void enfileirar(Fila *f, int valor) {
+    if (fila_cheia(f)) {
+        printf("Erro: Fila cheia!\n");
+    } else {
+        f->dados[f->inicio] = valor; // Adiciona o valor no início
+        f->inicio--; // Desloca o início para a posição anterior
+        printf("Elemento %d enfileirado.\n", valor);
+    }
+}
+int desenfileirar(Fila *f) {
+    if (fila_vazia(f)) {
+        printf("Erro: Fila vazia!\n");
+        return -1;
+    } else {
+        f->fim--; // Move o fim para a posição anterior
+        int valor = f->dados[f->fim];
+        return valor;
+    }
+}
+int inicio(Fila *f) {
+    if (fila_vazia(f)) {
+        printf("Erro: Fila vazia!\n");
+        return -1;
+    } else {
+        return f->dados[f->fim]; // Retorna o elemento no início
+    }
+}
+int quantidade(Fila *f) {
+    return MAX - f->inicio - 1; // A quantidade é a diferença entre o fim e o início
+}
+void esvaziar(Fila *f) {
+    f->inicio = MAX - 1;
+    f->fim = MAX - 1;
+    printf("Fila esvaziada.\n");
+}
+int main() {
+    Fila f;
+    inicializar(&f);
+    int escolha, valor;
+    do {
+        printf("\nEscolha uma operacao:\n");
+        printf("1. Enfileirar\n");
+        printf("2. Desenfileirar\n");
+        printf("3. Exibir inicio\n");
+        printf("4. Exibir quantidade de elementos\n");
+        printf("5. Esvaziar fila\n");
+        printf("6. Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 1:
+                printf("Digite um valor para enfileirar: ");
+                scanf("%d", &valor);
+                enfileirar(&f, valor);
+                break;
+            case 2:
+                valor = desenfileirar(&f);
+                if (valor != -1) {
+                    printf("Elemento desenfileirado: %d\n", valor);
+                }
+                break;
+            case 3:
+                valor = inicio(&f);
+                if (valor != -1) {
+                    printf("Elemento no inicio: %d\n", valor);
+                }
+                break;
+            case 4:
+                printf("Quantidade de elementos na fila: %d\n", quantidade(&f));
+                break;
+            case 5:
+                esvaziar(&f);
+                break;
+            case 6:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opcao invalida!\n");
+        }
+    } while (escolha != 6);
+    return 0;
+}
